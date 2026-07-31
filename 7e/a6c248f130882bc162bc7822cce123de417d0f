@@ -1,0 +1,27 @@
+apps/iris-hub/src/driver.ts
+  s_a8b8ed6e62b036::t_a8352afc113d23 9,14,17,20,26,34,40
+apps/iris-hub/src/input/input-event.ts
+  s_a8b8ed6e62b036::t_550c5d782210a5 10
+apps/iris-hub/src/input/panel.ts
+  s_a8b8ed6e62b036::t_b50bf575d4934a 8,29,56
+apps/iris-hub/src/layout/navigate.ts
+  s_a8b8ed6e62b036::t_3865391bd4c9d6 3,10
+packages/hermes-protocol/src/waveform.ts
+  s_a8b8ed6e62b036::t_4f2859e7d5b2ab 5,11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.19",
+  "base_commit_sha": "7ea6c248f130882bc162bc7822cce123de417d0f",
+  "prompts": {},
+  "sessions": {
+    "s_a8b8ed6e62b036": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "af2449f5-b7f7-4066-ae1f-972db2c507d5",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Michel <michel@impulselab.ai>"
+    }
+  }
+}
