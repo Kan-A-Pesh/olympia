@@ -1,0 +1,83 @@
+apps/iris-hub/src/input/input-event.test.ts
+  s_a8b8ed6e62b036::t_15588e136a4c5b 1-59
+packages/hermes-protocol/src/index.ts
+  s_a8b8ed6e62b036::t_9d539e412e3c29 1-4
+pnpm-workspace.yaml
+  s_a8b8ed6e62b036::t_35f37735bab984 1-3
+apps/iris-hub/src/input/input-event.ts
+  s_a8b8ed6e62b036::t_9edbfbac5c7bc7 1-66
+apps/iris-hub/src/input/panel.ts
+  s_a8b8ed6e62b036::t_994d8428cd1c96 1-2,4,8-10,13-22,25-28,31-50,64-84,100
+  s_a8b8ed6e62b036::t_d449960efe44c3 3,5-7,11-12,23-24,29-30,51-63,85-99
+packages/hermes-protocol/src/waveform.test.ts
+  s_a8b8ed6e62b036::t_f37272569f91d7 1-66
+apps/iris-hub/src/layout/navigate.ts
+  s_a8b8ed6e62b036::t_04ebbae5612362 15-16
+  s_a8b8ed6e62b036::t_1ea152a476b6ad 1-14,17-55
+packages/hermes-protocol/src/identity.ts
+  s_a8b8ed6e62b036::t_4b7adba0fa1d7f 1-141
+hardware/LICENSE
+  s_a8b8ed6e62b036::t_f305dd73b4b12b 1-7
+hardware/iris-hub-case/olympia-keys.dts
+  s_a8b8ed6e62b036::t_9c92b7b2d2ae47 1-15,73-104,106-111
+  s_a8b8ed6e62b036::t_3d64e0555d18e3 16-72,105
+packages/hermes-protocol/tsconfig.json
+  s_a8b8ed6e62b036::t_65f94997761e1e 1-4,7-10
+  s_a8b8ed6e62b036::t_3dbaccedc3f9dc 5-6
+packages/hermes-protocol/package.json
+  s_a8b8ed6e62b036::t_4c027a789c27d3 1-24
+.gitignore
+  s_a8b8ed6e62b036::t_2ee657e4c48449 7-8
+  s_a8b8ed6e62b036::t_4f947fbb346bde 1-6,9-18
+tsconfig.base.json
+  s_a8b8ed6e62b036::t_263e3c8b3cf3c4 1-19
+packages/hermes-protocol/src/topics.test.ts
+  s_a8b8ed6e62b036::t_74c3824c16d6af 1-61
+hardware/iris-hub-case/README.md
+  s_a8b8ed6e62b036::t_c174591327aac8 1-27
+apps/iris-hub/src/driver.ts
+  s_a8b8ed6e62b036::t_6f42ecd1b052a7 1-71
+README.md
+  s_a8b8ed6e62b036::t_8cf2c39946c1c4 1-2
+  s_a8b8ed6e62b036::t_6c4aebcb42172f 3-44
+packages/hermes-protocol/src/waveform.ts
+  s_a8b8ed6e62b036::t_a9eb21e2fd9a47 1-115
+hardware/iris-hub-case/config.txt.snippet
+  s_a8b8ed6e62b036::t_110810b96998b9 1-12,14-17
+  s_a8b8ed6e62b036::t_02d0d1093235a3 13,18-41
+packages/hermes-protocol/src/topics.ts
+  s_a8b8ed6e62b036::t_9f936c11474cc9 1-57
+turbo.json
+  s_a8b8ed6e62b036::t_592e82bc691399 1-20
+apps/iris-hub/package.json
+  s_a8b8ed6e62b036::t_e76f3cfc35bddd 1-19
+apps/iris-hub/tsconfig.json
+  s_a8b8ed6e62b036::t_d259deb8dc931a 1-10
+package.json
+  s_a8b8ed6e62b036::t_b01b4a473c590e 1-22
+apps/iris-hub/src/layout/navigate.test.ts
+  s_a8b8ed6e62b036::t_d80d30685e7fa7 31,34-35,38-43
+  s_a8b8ed6e62b036::t_152072ba324677 1-30,32-33,36-37,44-71
+packages/hermes-protocol/src/device-id.ts
+  s_a8b8ed6e62b036::t_b2bd9db60e9a0c 1-53
+LICENSE
+  s_a8b8ed6e62b036::t_d540428423ef44 1-202
+pnpm-lock.yaml
+  s_a8b8ed6e62b036::t_19514c8f8aaad6 1-1000
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.18",
+  "base_commit_sha": "314ff57b2b460e0e5cfad7115f08f69ccb1d2fd5",
+  "prompts": {},
+  "sessions": {
+    "s_a8b8ed6e62b036": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "af2449f5-b7f7-4066-ae1f-972db2c507d5",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Michel <michel@impulselab.ai>"
+    }
+  }
+}
