@@ -1,0 +1,19 @@
+.doctor/scripts/repo/artifacts.sh
+  s_a8b8ed6e62b036::t_15b084efbfd5a4 26,29-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.19",
+  "base_commit_sha": "e673fd9655870d460c3de63056ac694a0042e6d6",
+  "prompts": {},
+  "sessions": {
+    "s_a8b8ed6e62b036": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "af2449f5-b7f7-4066-ae1f-972db2c507d5",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Michel <michel@impulselab.ai>"
+    }
+  }
+}
