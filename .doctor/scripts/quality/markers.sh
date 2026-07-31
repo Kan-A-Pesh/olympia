@@ -14,7 +14,7 @@ FILES=$("$DOCTOR_DIR/utils/list-files.sh" ts)
 
 ERRORS=0
 MARKERS=$(printf '%s\n' "$FILES" | tr '\n' '\0' \
-  | xargs -0 grep -nE '(TODO|FIXME|XXX|HACK)' 2>/dev/null || true)
+  | xargs -0 grep -HnE '(TODO|FIXME|XXX|HACK)' 2>/dev/null || true)
 
 if [[ -n "$MARKERS" ]]; then
   while IFS= read -r hit; do

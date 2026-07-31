@@ -13,7 +13,7 @@ SAMPLE_IDS="${DOCTOR_SAMPLE_IDS:-samples|sampleBuffer|channelData|waveform|pixel
 ERRORS=0
 
 grep_all() {
-  printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -nE "$1" /dev/null 2>/dev/null || true
+  printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -HnE "$1" /dev/null 2>/dev/null || true
 }
 
 scan() {

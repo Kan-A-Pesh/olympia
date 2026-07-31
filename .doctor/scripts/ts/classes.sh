@@ -12,7 +12,7 @@ FILES=$("$DOCTOR_DIR/utils/list-files.sh" ts)
 ALLOWED_BASE="${DOCTOR_ALLOWED_BASE:-Error|EventEmitter}"
 ERRORS=0
 
-grep_all() { printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -nE "$1" 2>/dev/null || true; }
+grep_all() { printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -HnE "$1" 2>/dev/null || true; }
 
 while IFS= read -r hit; do
   [[ -z "$hit" ]] && continue

@@ -24,7 +24,7 @@ TEXT=$(printf '%s\n' "$ALL" | grep -E '\.(ts|js|json|sh|dts|snippet|yaml|yml)$' 
 
 scan() {
   local id="$1" pattern="$2" label="$3" hits
-  hits=$(printf '%s\n' "$TEXT" | tr '\n' '\0' | xargs -0 grep -nE "$pattern" 2>/dev/null || true)
+  hits=$(printf '%s\n' "$TEXT" | tr '\n' '\0' | xargs -0 grep -HnE "$pattern" 2>/dev/null || true)
   [[ -z "$hits" ]] && return 0
   while IFS= read -r hit; do report "$id $hit — $label"; done <<< "$hits"
 }
@@ -40,7 +40,7 @@ scan 178 'createHash\("(md5|sha1)"\)' 'empreinte cryptographique obsolète'
 scan 182 '(exec|execSync|spawnSync)\([^)]*\$\{' 'commande shell interpolée'
 
 RANDOM_HITS=$(printf '%s\n' "$TEXT" | tr '\n' '\0' \
-  | xargs -0 grep -nE 'Math\.random\(' 2>/dev/null || true)
+  | xargs -0 grep -HnE 'Math\.random\(' 2>/dev/null || true)
 [[ -n "$RANDOM_HITS" ]] && while IFS= read -r hit; do
   report "179 $hit — aléatoire non cryptographique"
 done <<< "$RANDOM_HITS"

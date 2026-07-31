@@ -13,7 +13,7 @@ ERRORS=0
 report() { echo "FAIL: $1"; ERRORS=$((ERRORS + 1)); }
 
 IMPORTS=$(printf '%s\n' "$FILES" | tr '\n' '\0' \
-  | xargs -0 grep -nE '^[[:space:]]*(import|export)[^;]* from "' 2>/dev/null || true)
+  | xargs -0 grep -HnE '^[[:space:]]*(import|export)[^;]* from "' 2>/dev/null || true)
 [[ -z "$IMPORTS" ]] && { echo "OK: aucun import à inspecter"; exit 0; }
 
 while IFS= read -r line; do
@@ -55,7 +55,7 @@ done <<< "$IMPORTS"
 SHARED=$(printf '%s\n' "$FILES" | grep -E '^packages/hermes-protocol/' || true)
 if [[ -n "$SHARED" ]]; then
   NODE_API=$(printf '%s\n' "$SHARED" | tr '\n' '\0' \
-    | xargs -0 grep -nE 'from "node:' 2>/dev/null || true)
+    | xargs -0 grep -HnE 'from "node:' 2>/dev/null || true)
   if [[ -n "$NODE_API" ]]; then
     while IFS= read -r hit; do
       report "69 $hit — API Node dans un paquet destiné aussi au navigateur"

@@ -13,7 +13,7 @@ FILES=$("$DOCTOR_DIR/utils/list-files.sh" src)
 ERRORS=0
 scan() {
   local id="$1" pattern="$2" label="$3" hits
-  hits=$(printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -nE "$pattern" 2>/dev/null || true)
+  hits=$(printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -HnE "$pattern" 2>/dev/null || true)
   [[ -z "$hits" ]] && return 0
   while IFS= read -r hit; do
     echo "FAIL: $id $hit — $label"
@@ -33,7 +33,7 @@ scan 181 '(^|[^.[:alnum:]])(eval|new[[:space:]]+Function)\(' 'évaluation dynami
 scan 385 'JSON\.parse\([[:space:]]*JSON\.stringify' 'copie par sérialisation'
 
 NESTED=$(printf '%s\n' "$FILES" | tr '\n' '\0' \
-  | xargs -0 grep -nE '\?[^?:]*\?[^?:]*:' 2>/dev/null | grep -vE '\?\.' || true)
+  | xargs -0 grep -HnE '\?[^?:]*\?[^?:]*:' 2>/dev/null | grep -vE '\?\.' || true)
 if [[ -n "$NESTED" ]]; then
   while IFS= read -r hit; do
     echo "FAIL: 129 $hit — ternaire imbriqué"

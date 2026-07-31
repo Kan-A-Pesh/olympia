@@ -16,7 +16,7 @@ FILES=$("$DOCTOR_DIR/utils/list-files.sh" src)
 
 ERRORS=0
 report() { echo "FAIL: $1"; ERRORS=$((ERRORS + 1)); }
-grep_in() { printf '%s\n' "$2" | tr '\n' '\0' | xargs -0 grep -nE "$1" 2>/dev/null || true; }
+grep_in() { printf '%s\n' "$2" | tr '\n' '\0' | xargs -0 grep -HnE "$1" 2>/dev/null || true; }
 
 while IFS= read -r file; do
   base="${file##*/}"

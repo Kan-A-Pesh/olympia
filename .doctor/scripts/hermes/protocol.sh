@@ -17,12 +17,12 @@ report() { echo "FAIL: $1"; ERRORS=$((ERRORS + 1)); }
 
 OUTSIDE=$(printf '%s\n' "$FILES" | grep -vF "$TOPICS_MODULE" || true)
 if [[ -n "$OUTSIDE" ]]; then
-  HITS=$(printf '%s\n' "$OUTSIDE" | tr '\n' '\0' | xargs -0 grep -nE '"olympia/' 2>/dev/null || true)
+  HITS=$(printf '%s\n' "$OUTSIDE" | tr '\n' '\0' | xargs -0 grep -HnE '"olympia/' 2>/dev/null || true)
   [[ -n "$HITS" ]] && while IFS= read -r hit; do
     report "156 $hit — racine de topic hors du module dédié"
   done <<< "$HITS"
 
-  HITS=$(printf '%s\n' "$OUTSIDE" | tr '\n' '\0' | xargs -0 grep -nE '`[^`]*olympia/[^`]*\$\{' 2>/dev/null || true)
+  HITS=$(printf '%s\n' "$OUTSIDE" | tr '\n' '\0' | xargs -0 grep -HnE '`[^`]*olympia/[^`]*\$\{' 2>/dev/null || true)
   [[ -n "$HITS" ]] && while IFS= read -r hit; do
     report "155 $hit — topic assemblé par interpolation"
   done <<< "$HITS"
@@ -34,7 +34,7 @@ VERSION_HITS=$(printf '%s\n' "$FILES" | tr '\n' '\0' \
   report "157 $f — version de protocole hors du module dédié"
 done <<< "$VERSION_HITS"
 
-PARSE=$(printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -nE 'JSON\.parse\(' 2>/dev/null || true)
+PARSE=$(printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -HnE 'JSON\.parse\(' 2>/dev/null || true)
 [[ -n "$PARSE" ]] && while IFS= read -r hit; do
   file="${hit%%:*}"
   line="${hit#*:}"; line="${line%%:*}"
@@ -44,7 +44,7 @@ PARSE=$(printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -nE 'JSON\.parse\(
 done <<< "$PARSE"
 
 WAVE_JSON=$(printf '%s\n' "$FILES" | tr '\n' '\0' \
-  | xargs -0 grep -nE 'JSON\.stringify\([^)]*(waveform|samples|frame)' 2>/dev/null || true)
+  | xargs -0 grep -HnE 'JSON\.stringify\([^)]*(waveform|samples|frame)' 2>/dev/null || true)
 [[ -n "$WAVE_JSON" ]] && while IFS= read -r hit; do
   report "167 $hit — forme d onde sérialisée en JSON"
 done <<< "$WAVE_JSON"

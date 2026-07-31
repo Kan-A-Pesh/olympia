@@ -13,7 +13,7 @@ FILES=$("$DOCTOR_DIR/utils/list-files.sh" ts)
 ERRORS=0
 scan() {
   local id="$1" pattern="$2" label="$3" hits
-  hits=$(printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -nE "$pattern" 2>/dev/null || true)
+  hits=$(printf '%s\n' "$FILES" | tr '\n' '\0' | xargs -0 grep -HnE "$pattern" 2>/dev/null || true)
   [[ -z "$hits" ]] && return 0
   while IFS= read -r hit; do
     echo "FAIL: $id $hit — $label"
@@ -29,7 +29,7 @@ scan 72 '(^|[^.[:alnum:]])require\('        'appel require'
 scan 67 '^[[:space:]]*import[[:space:]]+"'  'import pour son seul effet de bord'
 
 MISSING_EXT=$(printf '%s\n' "$FILES" | tr '\n' '\0' \
-  | xargs -0 grep -nE 'from[[:space:]]+"\.{1,2}/[^"]*"' 2>/dev/null \
+  | xargs -0 grep -HnE 'from[[:space:]]+"\.{1,2}/[^"]*"' 2>/dev/null \
   | grep -vE '\.(js|json|css)"' || true)
 if [[ -n "$MISSING_EXT" ]]; then
   while IFS= read -r hit; do
@@ -39,7 +39,7 @@ if [[ -n "$MISSING_EXT" ]]; then
 fi
 
 DUPES=$(printf '%s\n' "$FILES" | tr '\n' '\0' \
-  | xargs -0 grep -nE '^import .* from "' 2>/dev/null \
+  | xargs -0 grep -HnE '^import .* from "' 2>/dev/null \
   | sed -E 's/^([^:]+):[0-9]+:.* from "([^"]+)".*$/\1 \2/' \
   | sort | uniq -d || true)
 if [[ -n "$DUPES" ]]; then

@@ -14,7 +14,7 @@ ERRORS=0
 report() { echo "FAIL: $1"; ERRORS=$((ERRORS + 1)); }
 scan() {
   local id="$1" pattern="$2" label="$3" hits
-  hits=$(printf '%s\n' "$TESTS" | tr '\n' '\0' | xargs -0 grep -nE "$pattern" 2>/dev/null || true)
+  hits=$(printf '%s\n' "$TESTS" | tr '\n' '\0' | xargs -0 grep -HnE "$pattern" 2>/dev/null || true)
   [[ -z "$hits" ]] && return 0
   while IFS= read -r hit; do report "$id $hit — $label"; done <<< "$hits"
 }
