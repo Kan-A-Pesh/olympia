@@ -23,11 +23,11 @@ while IFS= read -r file; do
   esac
 done <<< "$ALL"
 
-SIZES=$(printf '%s\n' "$ALL" | tr '\n' '\0' | xargs -0 stat -f '%z %N' 2>/dev/null \
-     || printf '%s\n' "$ALL" | tr '\n' '\0' | xargs -0 stat -c '%s %n' 2>/dev/null || true)
+SIZES=$(printf '%s\n' "$ALL" | tr '\n' '\0' | xargs -0 wc -c 2>/dev/null | grep -vE ' total$' || true)
 if [[ -n "$SIZES" ]]; then
   while read -r bytes file; do
-    [[ -z "${file:-}" ]] && continue
+    [[ -z "${file:-}" || -z "${bytes:-}" ]] && continue
+    [[ "$bytes" =~ ^[0-9]+$ ]] || continue
     [[ "$bytes" -gt "$MAX_BYTES" ]] && report "210 $file — $bytes octets (max $MAX_BYTES)"
   done <<< "$SIZES"
 fi
