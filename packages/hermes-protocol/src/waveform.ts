@@ -2,13 +2,13 @@ const MAGIC = 0x48574631
 const HEADER_BYTES = 20
 const MAX_CHANNELS = 8
 
-export interface WaveformChannel {
+export type WaveformChannel = {
   voltsPerSample: number
   offsetVolts: number
   samples: Uint8Array | Uint16Array
 }
 
-export interface WaveformFrame {
+export type WaveformFrame = {
   sampleRateHz: number
   capturedAt: number
   bitsPerSample: 8 | 16

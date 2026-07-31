@@ -1,13 +1,13 @@
 import { step, type Direction } from "../input/panel.js"
 
-export interface Rect {
+export type Rect = {
   x: number
   y: number
   w: number
   h: number
 }
 
-export interface Tile {
+export type Tile = {
   id: string
   rect: Rect
 }

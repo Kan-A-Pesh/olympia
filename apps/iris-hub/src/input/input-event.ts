@@ -7,7 +7,7 @@ export const KEY_RELEASE = 0
 export const KEY_PRESS = 1
 export const KEY_REPEAT = 2
 
-export interface InputEvent {
+export type InputEvent = {
   timeMs: number
   type: number
   code: number

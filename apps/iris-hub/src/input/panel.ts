@@ -5,7 +5,7 @@ import { EV_KEY, EV_REL, InputEventParser, KEY_PRESS, KEY_REPEAT, REL_X } from "
 export const DIRECTIONS = ["nw", "n", "ne", "w", "e", "sw", "s", "se"] as const
 export type Direction = (typeof DIRECTIONS)[number]
 
-export interface PanelLayout {
+export type PanelLayout = {
   encoders: string[]
   keys: string
   directions: Record<number, Direction>
@@ -26,7 +26,7 @@ export const DEFAULT_LAYOUT: PanelLayout = {
 
 export type PanelEvent =
   | { type: "rotate"; encoder: number; delta: number }
-  | { type: "navigate"; direction: Direction; repeat: boolean }
+  | { type: "navigate"; direction: Direction; isRepeat: boolean }
   | { type: "push"; encoder: number }
 
 export class ControlPanel extends EventEmitter<{ input: [PanelEvent]; error: [Error] }> {
@@ -53,7 +53,7 @@ export class ControlPanel extends EventEmitter<{ input: [PanelEvent]; error: [Er
 
       const direction = this.#layout.directions[event.code]
       if (direction) {
-        this.emit("input", { type: "navigate", direction, repeat: event.value === KEY_REPEAT })
+        this.emit("input", { type: "navigate", direction, isRepeat: event.value === KEY_REPEAT })
         return
       }
 

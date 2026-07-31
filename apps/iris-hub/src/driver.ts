@@ -6,24 +6,24 @@ export type SamplePayload =
   | { kind: "text"; t: number; text: string }
   | { kind: "waveform"; frame: Uint8Array }
 
-export interface Sample {
+export type Sample = {
   streamId: string
   payload: SamplePayload
 }
 
-export interface DeviceHandle {
+export type DeviceHandle = {
   readonly identity: DeviceIdentity
   readonly transport: "usb" | "mqtt"
-  readonly authenticated: boolean
+  readonly isAuthenticated: boolean
 }
 
-export interface DriverContext {
+export type DriverContext = {
   emit(sample: Sample): void
   updateIdentity(identity: DeviceIdentity): void
   log(message: string): void
 }
 
-export interface Driver {
+export type Driver = {
   readonly kind: string
   readonly matches: (signature: string) => boolean
   start(ctx: DriverContext): Promise<DeviceIdentity>
@@ -31,13 +31,13 @@ export interface Driver {
   stop(): Promise<void>
 }
 
-export interface DriverFactory {
+export type DriverFactory = {
   readonly kind: string
   readonly matches: (signature: string) => boolean
   create(port: DevicePort): Driver
 }
 
-export interface DevicePort {
+export type DevicePort = {
   readonly path: string
   write(data: Uint8Array | string): Promise<void>
   onData(handler: (chunk: Uint8Array) => void): void
