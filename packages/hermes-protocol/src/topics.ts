@@ -5,11 +5,11 @@ export const VERSION = "v1"
 
 const BASE = `${ROOT}/${VERSION}`
 
-export const identityTopic = (id: DeviceId) => `${BASE}/devices/${id}/identity`
-export const statusTopic = (id: DeviceId) => `${BASE}/devices/${id}/status`
-export const dataTopic = (id: DeviceId, streamId: string) => `${BASE}/devices/${id}/data/${streamId}`
-export const commandTopic = (id: DeviceId, controlId: string) => `${BASE}/devices/${id}/cmd/${controlId}`
-export const quarantineTopic = (id: DeviceId) => `${BASE}/quarantine/${id}/identity`
+export const identityTopic = (id: DeviceId): string => `${BASE}/devices/${id}/identity`
+export const statusTopic = (id: DeviceId): string => `${BASE}/devices/${id}/status`
+export const dataTopic = (id: DeviceId, streamId: string): string => `${BASE}/devices/${id}/data/${streamId}`
+export const commandTopic = (id: DeviceId, controlId: string): string => `${BASE}/devices/${id}/cmd/${controlId}`
+export const quarantineTopic = (id: DeviceId): string => `${BASE}/quarantine/${id}/identity`
 
 export const ALL_IDENTITIES = `${BASE}/devices/+/identity`
 export const ALL_STATUSES = `${BASE}/devices/+/status`
