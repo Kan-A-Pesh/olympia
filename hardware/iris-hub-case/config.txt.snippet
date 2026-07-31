@@ -1,0 +1,41 @@
+# Olympia — iris-hub
+# À ajouter dans /boot/firmware/config.txt (Raspberry Pi OS Bookworm et suivants).
+#
+# pin_a est obligatoire sur chaque ligne : il désambiguïse le nom de nœud.
+# Sans lui, la deuxième instance échoue avec "Overlay already loaded".
+# relative_axis=1 fait émettre des événements EV_REL de +1/-1 (molette sans fin).
+
+dtoverlay=rotary-encoder,pin_a=4,pin_b=17,relative_axis=1
+dtoverlay=rotary-encoder,pin_a=5,pin_b=6,relative_axis=1
+dtoverlay=rotary-encoder,pin_a=13,pin_b=19,relative_axis=1
+dtoverlay=rotary-encoder,pin_a=26,pin_b=16,relative_axis=1
+
+# Pavé directionnel et poussoirs d'encodeurs : overlay compilé depuis olympia-keys.dts
+#   dtc -@ -I dts -O dtb -o olympia-keys.dtbo olympia-keys.dts
+#   sudo cp olympia-keys.dtbo /boot/firmware/overlays/
+dtoverlay=olympia-keys
+
+# ─── Affectation GPIO ────────────────────────────────────────────────────────
+#
+# Encodeurs (tous contextuels)      A     B     poussoir
+#   encodeur 1                      4     17    27
+#   encodeur 2                      5     6     22
+#   encodeur 3                      13    19    23
+#   encodeur 4                      26    16    24
+#
+# Pavé directionnel                       NO 11   N 12   NE 18
+#                                          O  8          E 20
+#                                         SO  7   S 25   SE 21
+#
+# 20 GPIO au total, sur 26 disponibles.
+#
+# Les codes du pavé sont ceux du pavé numérique (KEY_KP7/8/9, KP4/6, KP1/2/3) :
+# leur disposition physique est exactement une rose des vents, donc la sémantique
+# est juste et lisible dans evtest sans table de correspondance.
+#
+# ─── Anti-rebond ─────────────────────────────────────────────────────────────
+#
+# Boutons : debounce-interval = 20 ms, assuré par le noyau (dans le .dts).
+# Encodeurs : l'overlay rotary-encoder n'expose AUCUN anti-rebond. Les EC11 étant
+# mécaniques, prévoir un filtre RC sur chaque voie A et B — 8 résistances 10 kΩ et
+# 8 condensateurs 100 nF — faute de quoi les molettes sauteront des crans.
