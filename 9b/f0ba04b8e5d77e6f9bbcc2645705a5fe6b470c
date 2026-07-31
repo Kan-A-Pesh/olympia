@@ -1,0 +1,272 @@
+.doctor/fixtures/serial/framing.sh
+  s_a8b8ed6e62b036::t_f5712294e0d9b8 1-7,9-12
+  s_a8b8ed6e62b036::t_4fce7796309ebf 8
+.doctor/fixtures/ui/pointer-free.sh
+  s_a8b8ed6e62b036::t_37fc9e4f6e0bd4 1-23
+.doctor/scripts/quality/control-flow.sh
+  s_a8b8ed6e62b036::t_873cfe0f2070ae 76,80,82
+  s_a8b8ed6e62b036::t_4e2658a9f71ae0 1-75,77-79,81,83-90,92-96,98-112
+  s_a8b8ed6e62b036::t_83a4a23b8dc4d6 91,97
+.doctor/scripts/ui/render-loop.sh
+  s_a8b8ed6e62b036::t_505d8a70ce143b 96
+  s_a8b8ed6e62b036::t_a988a5de78a33e 1-95,97-106
+.doctor/fixtures/hardware/design.sh
+  s_a8b8ed6e62b036::t_0f7f1250ac3f7d 1-36
+.doctor/scripts/firmware/build.sh
+  s_a8b8ed6e62b036::t_434d3559883b69 1-34,37-77,79-95,97-128
+  s_a8b8ed6e62b036::t_91d77c46fe0185 35-36
+  s_a8b8ed6e62b036::t_e329d6b79fc83a 78,96
+.doctor/scripts/daemon/backoff.sh
+  s_a8b8ed6e62b036::t_543caf81237bad 1-52
+.doctor/scripts/ci/workflow.sh
+  s_a8b8ed6e62b036::t_a19bcd9337c8f2 1-129
+.doctor/scripts/errors/logging.sh
+  s_a8b8ed6e62b036::t_5ab41dab2eae0c 1-125
+.doctor/fixtures/store/migrations.sh
+  s_a8b8ed6e62b036::t_a6a011f8e1f428 1-4
+.doctor/scripts/store/queries.sh
+  s_a8b8ed6e62b036::t_eea59953efd882 1-96
+.doctor/scripts/firmware/realtime.sh
+  s_a8b8ed6e62b036::t_5413234ea33cdb 103
+  s_a8b8ed6e62b036::t_245ffc3ce27b5f 1-102,104-150
+.doctor/fixtures/store/sqlite.sh
+  s_a8b8ed6e62b036::t_f814b0e74b4b59 1-9
+.doctor/scripts/graph/analysis.sh
+  s_a8b8ed6e62b036::t_d54d512aa3e57b 1-18
+.doctor/fixtures/errors/logging.sh
+  s_a8b8ed6e62b036::t_6ba40e514fe9f7 1-9
+.doctor/scripts/hardware/dts.sh
+  s_a8b8ed6e62b036::t_4bb7db898529ba 1-36
+.doctor/fixtures/serial/device.sh
+  s_a8b8ed6e62b036::t_87abcd1eca0168 1-10
+.doctor/scripts/serial/config.sh
+  s_a8b8ed6e62b036::t_fd9b95bc9d7fd8 1-57
+.doctor/fixtures/daemon/bounded.sh
+  s_a8b8ed6e62b036::t_ae558321e7f1bd 1-22
+.doctor/fixtures/mqtt/handlers.sh
+  s_a8b8ed6e62b036::t_314da73d21452f 1-12
+.doctor/scripts/ts/inference.sh
+  s_a8b8ed6e62b036::t_47324625ab786e 52-54
+  s_a8b8ed6e62b036::t_39b83e3cd8bdeb 1-51,55-123
+.doctor/scripts/build/config.sh
+  s_a8b8ed6e62b036::t_376a428a02ee01 21
+  s_a8b8ed6e62b036::t_465982c593a9a3 1-20,22-43,45-75
+  s_a8b8ed6e62b036::t_6ee197751c705c 44
+.doctor/scripts/quality/errors.sh
+  s_a8b8ed6e62b036::t_9d6fd02c0bb037 1-115
+.doctor/fixtures/store/queries.sh
+  s_a8b8ed6e62b036::t_b7c6426947770a 10-16
+  s_a8b8ed6e62b036::t_36d7f00493a708 1-9
+.doctor/scripts/quality/functions.sh
+  s_a8b8ed6e62b036::t_17a9b53990b46c 1-82,86-101,111-146
+  s_a8b8ed6e62b036::t_38110b3f2aa293 102-110
+  s_a8b8ed6e62b036::t_d7dbf0a4abc27d 83-85
+.doctor/fixtures/daemon/backoff.sh
+  s_a8b8ed6e62b036::t_cb0ea1128e3677 1-8
+.doctor/fixtures/firmware/build.sh
+  s_a8b8ed6e62b036::t_6ad0262601eba7 1-10
+.doctor/scripts/daemon/lifecycle.sh
+  s_a8b8ed6e62b036::t_87ad9f860c9264 1-94
+.doctor/scripts/hardware/power.sh
+  s_a8b8ed6e62b036::t_020fac66e95ca8 1-100
+.doctor/fixtures/hardware/dts.sh
+  s_a8b8ed6e62b036::t_48cf4eb212feff 1-16
+.doctor/scripts/daemon/streams.sh
+  s_a8b8ed6e62b036::t_6f321caf448235 1-74
+.doctor/fixtures/ci/git.sh
+  s_a8b8ed6e62b036::t_8fcc9fe2db04d1 1-4
+.doctor/scripts/ts/exported-returns.sh
+  s_a8b8ed6e62b036::t_9f6585a1024479 28,33-41,44-57
+  s_a8b8ed6e62b036::t_0da4f29e7bf17f 1-27,29-32,42-43,58-69
+.doctor/fixtures/naming/units.sh
+  s_a8b8ed6e62b036::t_8f198032a88b92 1-12
+.doctor/scripts/mqtt/connect.sh
+  s_a8b8ed6e62b036::t_e0b7fc4a00f31b 1-49,51-81
+  s_a8b8ed6e62b036::t_f74be3922db1f5 50
+.doctor/fixtures/errors/exceptions.sh
+  s_a8b8ed6e62b036::t_0d2281f9cf45b3 1-45
+.doctor/fixtures/deps/policy.sh
+  s_a8b8ed6e62b036::t_b9b98ffdd89a03 1-24
+.doctor/fixtures/deps/usage.sh
+  s_a8b8ed6e62b036::t_a2ba766888c3aa 1-12
+.doctor/scripts/naming/units.sh
+  s_a8b8ed6e62b036::t_d4a0fc1661884d 1-17,19-83
+  s_a8b8ed6e62b036::t_f081001396db92 18
+.doctor/fixtures/ui/react-hygiene.sh
+  s_a8b8ed6e62b036::t_50920bec2fd006 1-21
+.doctor/fixtures/mqtt/publish.sh
+  s_a8b8ed6e62b036::t_6c1f847724b791 1-8
+.doctor/fixtures/ts/exported-returns.sh
+  s_a8b8ed6e62b036::t_587377bad30d9f 1-5
+.doctor/scripts/ui/tiles.sh
+  s_a8b8ed6e62b036::t_fba7ec86c3ad80 1-27,29-42,44-49,69-86
+  s_a8b8ed6e62b036::t_f302e07019dd5b 28
+  s_a8b8ed6e62b036::t_fa879be0914f25 43,50-68
+.doctor/scripts/build/compiler.sh
+  s_a8b8ed6e62b036::t_772f936820baef 1-129
+.doctor/fixtures/perf/codec.sh
+  s_a8b8ed6e62b036::t_d00f7d1106dd10 1-6
+.doctor/scripts/store/migrations.sh
+  s_a8b8ed6e62b036::t_51cc71f96fc3d2 1-58
+.doctor/fixtures/ui/tiles.sh
+  s_a8b8ed6e62b036::t_14df1e97c074cc 1-21
+.doctor/fixtures/mqtt/connect.sh
+  s_a8b8ed6e62b036::t_314021397ef037 9-19
+  s_a8b8ed6e62b036::t_cc050f8aa3a699 1-8
+.doctor/fixtures/ts/inference.sh
+  s_a8b8ed6e62b036::t_51d9bf1ccfefe3 1-22
+.doctor/fixtures/serial/port.sh
+  s_a8b8ed6e62b036::t_cb57c8bbd9326f 1-10
+.doctor/scripts/perf/regex.sh
+  s_a8b8ed6e62b036::t_35d719a436ee2c 1-117
+.doctor/fixtures/mqtt/subscribe.sh
+  s_a8b8ed6e62b036::t_84dd40c30c93e1 1-10
+.doctor/fixtures/quality/functions.sh
+  s_a8b8ed6e62b036::t_969303e0844963 1-13
+.doctor/fixtures/serial/config.sh
+  s_a8b8ed6e62b036::t_3b62cc893ac1b6 1-9
+.doctor/scripts/ui/pointer-free.sh
+  s_a8b8ed6e62b036::t_a4dacae63fd23b 1-30,32-77
+  s_a8b8ed6e62b036::t_3cad80ea61b731 31
+.doctor/fixtures/daemon/lifecycle.sh
+  s_a8b8ed6e62b036::t_befd52821abaf7 1-3,5-9
+  s_a8b8ed6e62b036::t_93ee53b8986ac8 4
+.doctor/scripts/store/sqlite.sh
+  s_a8b8ed6e62b036::t_71bc68ec8f1f98 1-59
+.doctor/scripts/serial/port.sh
+  s_a8b8ed6e62b036::t_949e7abd2d91ef 29
+  s_a8b8ed6e62b036::t_41720cd285868b 1-28,30-75
+.doctor/fixtures/ui/readability.sh
+  s_a8b8ed6e62b036::t_30dcdb82bab701 1-11
+.doctor/scripts/perf/samples.sh
+  s_a8b8ed6e62b036::t_36c7fe23424977 1-24,26-31,33-48
+  s_a8b8ed6e62b036::t_23cd33fdcafc9e 25
+  s_a8b8ed6e62b036::t_fcebdca1092ff1 32
+.doctor/scripts/deps/policy.sh
+  s_a8b8ed6e62b036::t_c54ca6bf64ed9e 88
+  s_a8b8ed6e62b036::t_114e052df3a8cd 1-87,89-99
+.doctor/fixtures/quality/errors.sh
+  s_a8b8ed6e62b036::t_92ac2a09e9a446 1-22
+.doctor/fixtures/daemon/streams.sh
+  s_a8b8ed6e62b036::t_bf5ac73efc120a 1-13
+.doctor/scripts/perf/hot-loops.sh
+  s_a8b8ed6e62b036::t_40ba8bbb64a721 1-102
+.doctor/scripts/ci/git.sh
+  s_a8b8ed6e62b036::t_7b5ab4b2c6c00e 15
+  s_a8b8ed6e62b036::t_7588ab17522ace 1-14,16-89
+.doctor/fixtures/errors/ui.sh
+  s_a8b8ed6e62b036::t_81494babfb94ec 1-5
+.doctor/fixtures/build/compiler.sh
+  s_a8b8ed6e62b036::t_dc4e369bf1b3f8 1-27
+.doctor/scripts/daemon/drivers.sh
+  s_a8b8ed6e62b036::t_ab5c0447295114 1-77
+.doctor/scripts/graph/analysis.mjs
+  s_a8b8ed6e62b036::t_491fcfad14b167 1-39,41-42,48-172,406,552,566,578,592,718,755,763,765,767,811,869,879,1001
+  s_a8b8ed6e62b036::t_4dcdcc34308dac 290-292
+  s_a8b8ed6e62b036::t_098ec0c840e498 379
+  s_a8b8ed6e62b036::t_ca02ff617eadea 40,43-47
+  s_a8b8ed6e62b036::t_fc36de880877a2 173-289,293-378,380,396,400,421,427,445,450,458,472-473,481-482,487,493,496,504-505,514,530,533,542,553,556-557,567-569,579,593,596-598,606,610-611,621,627,634,644,652,659,667,679,685-687,702,705,720,723-725,728-731,733,735,745,747,751,764,768-769,771,779,784,789,795-797,818,821-822,826,833-835,844,853,862-863,866,870-871,878,880,882,885-890,892-896,908-910,916,922,928-930,938,942-943,954-955,971-972,983,994
+  s_a8b8ed6e62b036::t_73264ca0032b43 381-395,397-399,401-405,407-420,422-426,428-444,446-449,451-457,459-471,474-480,483-486,488-492,494-495,497-503,506-513,515-529,531-532,534-541,543-551,554-555,558-565,570-577,580-591,594-595,599-605,607-609,612-620,622-626,628-633,635-643,645-651,653-658,660-666,668-678,680-684,688-701,703-704,706-717,719,721-722,726-727,732,734,736-744,746,748-750,752-754,756-762,766,770,772-778,780-783,785-788,790-794,798-810,812-817,819-820,823-825,827-832,836-843,845-852,854-861,864-865,867-868,872-877,881,883-884,891,897-907,911-915,917-921,923-927,931-937,939-941,944-953,956-970,973-982,984-993,995-1000,1002-1033
+.doctor/fixtures/ci/workflow.sh
+  s_a8b8ed6e62b036::t_9eb65169da9df2 1-19
+.doctor/scripts/ui/readability.sh
+  s_a8b8ed6e62b036::t_12d53c9401a784 1-11,17-31,33-55,60,66-79,81-99
+  s_a8b8ed6e62b036::t_0cd9bb4f07835a 12-16,32,56-59,61-65,80
+.doctor/fixtures/mqtt/topics.sh
+  s_a8b8ed6e62b036::t_d5ff758ae4772c 1-11
+.doctor/scripts/perf/render.sh
+  s_a8b8ed6e62b036::t_ba3359e0c0c7cf 1-113
+.doctor/scripts/errors/exceptions.sh
+  s_a8b8ed6e62b036::t_2749025d1406a8 39,72-73,75,78-79,83,85,89,97-99,111,113-116,126-127,129-130,140
+  s_a8b8ed6e62b036::t_3596edafe3c5e0 22
+  s_a8b8ed6e62b036::t_bb07087be19917 145-149,151
+  s_a8b8ed6e62b036::t_26dbfb91069417 1-21,23-38,40-71,74,76-77,80-82,84,86-88,90-96,100-110,112,117-125,128,131-139,141-144,150,152-155
+.doctor/fixtures/graph/analysis.sh
+  s_a8b8ed6e62b036::t_030e9821413fd8 27,48,50-51,59-61,75,117-128,132-137,140-141
+  s_a8b8ed6e62b036::t_907353b49ff49a 1-26,28-47,49,52-58,62-74,76-116,129-131,138-139
+.doctor/fixtures/naming/vocabulary.sh
+  s_a8b8ed6e62b036::t_fa653b9d56147f 1-31
+.doctor/scripts/daemon/bounded.sh
+  s_a8b8ed6e62b036::t_63f89b01d0b72b 1-88
+.doctor/fixtures/perf/samples.sh
+  s_a8b8ed6e62b036::t_3f3838264d329c 1-13
+.doctor/fixtures/ui/render-loop.sh
+  s_a8b8ed6e62b036::t_d6a281f165364f 1-17
+.doctor/fixtures/build/config.sh
+  s_a8b8ed6e62b036::t_a56031a900434c 1-6
+.doctor/scripts/serial/device.sh
+  s_a8b8ed6e62b036::t_4df3dea28084e7 1-56
+.doctor/fixtures/hardware/power.sh
+  s_a8b8ed6e62b036::t_9e4347153541ff 1-11
+.doctor/scripts/hardware/design.sh
+  s_a8b8ed6e62b036::t_7681ff926e1900 99-100
+  s_a8b8ed6e62b036::t_690090f9a63772 1-98,101-169
+.doctor/scripts/perf/codec.sh
+  s_a8b8ed6e62b036::t_59fab84204e9f5 1-115
+.doctor/scripts/store/settings.sh
+  s_a8b8ed6e62b036::t_c5726c5400b718 50
+  s_a8b8ed6e62b036::t_e399af92203795 1-49,51-76
+.doctor/scripts/mqtt/subscribe.sh
+  s_a8b8ed6e62b036::t_ca8165a5bffca5 1-85
+.doctor/fixtures/quality/control-flow.sh
+  s_a8b8ed6e62b036::t_289eae626743cc 1-18
+.doctor/scripts/mqtt/topics.sh
+  s_a8b8ed6e62b036::t_041cb4069a4181 1-74
+.doctor/fixtures/perf/render.sh
+  s_a8b8ed6e62b036::t_39fbfc4f67ba17 1-8
+.doctor/fixtures/hardware/wiring.sh
+  s_a8b8ed6e62b036::t_5b5f28f3584c68 1-9
+.doctor/scripts/mqtt/publish.sh
+  s_a8b8ed6e62b036::t_12c89dd5fac2f4 1-73
+.doctor/scripts/errors/ui.sh
+  s_a8b8ed6e62b036::t_b9f0bf9547ea93 1-42
+.doctor/scripts/ui/react-hygiene.sh
+  s_a8b8ed6e62b036::t_0c21bd8e9dffc7 37
+  s_a8b8ed6e62b036::t_a593ac77668733 1-36,38-79,83-111
+  s_a8b8ed6e62b036::t_7c1d70428beb7e 80-82
+.doctor/scripts/hardware/wiring.sh
+  s_a8b8ed6e62b036::t_f8496092c8d82e 94
+  s_a8b8ed6e62b036::t_b7121a192c9da2 1-93,95-114
+.doctor/scripts/mqtt/handlers.sh
+  s_a8b8ed6e62b036::t_0a3f49e8951ed9 1-79
+.doctor/fixtures/daemon/drivers.sh
+  s_a8b8ed6e62b036::t_bf9ddffd090200 1-35
+.doctor/fixtures/firmware/realtime.sh
+  s_a8b8ed6e62b036::t_eb8cfc56acb812 1-44
+.doctor/fixtures/perf/regex.sh
+  s_a8b8ed6e62b036::t_bbe9a5077cc069 1-15
+.doctor/fixtures/store/settings.sh
+  s_a8b8ed6e62b036::t_90c1aba9856c03 1-4,9-10,14
+  s_a8b8ed6e62b036::t_3c093aeb0adc9f 5-8,11-13
+.doctor/fixtures/perf/hot-loops.sh
+  s_a8b8ed6e62b036::t_c21bf0921b4275 1-10
+.doctor/scripts/naming/vocabulary.sh
+  s_a8b8ed6e62b036::t_bc33f8ae53b0db 16
+  s_a8b8ed6e62b036::t_865502840d5813 1-15,17-141
+.doctor/scripts/deps/usage.sh
+  s_a8b8ed6e62b036::t_262128110c80e2 1-83
+.doctor/scripts/serial/framing.sh
+  s_a8b8ed6e62b036::t_46c18ccc035345 1-72
+.github/dependabot.yml
+  s_a8b8ed6e62b036::t_8d3f14297db330 1-10
+.github/workflows/ci.yml
+  s_a8b8ed6e62b036::t_b04bae8d242555 20
+packages/hermes-protocol/src/topics.ts
+  s_a8b8ed6e62b036::t_161a8e8fd4f941 8-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.19",
+  "base_commit_sha": "9bf0ba04b8e5d77e6f9bbcc2645705a5fe6b470c",
+  "prompts": {},
+  "sessions": {
+    "s_a8b8ed6e62b036": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "af2449f5-b7f7-4066-ae1f-972db2c507d5",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Michel <michel@impulselab.ai>"
+    }
+  }
+}
