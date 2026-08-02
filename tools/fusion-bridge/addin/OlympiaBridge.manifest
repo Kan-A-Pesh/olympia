@@ -1,0 +1,9 @@
+{
+  "autodeskProduct": "Fusion360",
+  "type": "addin",
+  "author": "olympia",
+  "description": { "": "Expose Fusion sur un serveur HTTP local pour le pont MCP" },
+  "supportedOS": "mac",
+  "runOnStartup": false,
+  "editEnabled": true
+}

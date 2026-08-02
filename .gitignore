@@ -26,3 +26,6 @@ hardware/iris-hub-case/preview/iris-hub-case.obj
 hardware/iris-hub-case/preview/preview.mtl
 hardware/iris-hub-case/preview/wireframe.svg
 hardware/iris-hub-case/preview/*.png
+
+.venv/
+__pycache__/
