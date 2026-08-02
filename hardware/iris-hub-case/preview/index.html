@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>iris-hub-case — volumétrie</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin: 0; background: #101216; color: #c8ccd2; font: 12px/1.6 ui-monospace, SFMono-Regular, monospace; overflow: hidden; }
+      #panel { position: fixed; top: 0; left: 0; bottom: 0; width: 210px; padding: 14px; background: #15181d; border-right: 1px solid #262a31; overflow-y: auto; }
+      #panel h1 { margin: 0 0 2px; font-size: 13px; color: #fff; font-weight: 600; }
+      #panel .sub { color: #6e747d; margin-bottom: 16px; }
+      #panel h2 { margin: 18px 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #6e747d; font-weight: 500; }
+      label { display: flex; align-items: center; gap: 7px; padding: 3px 0; cursor: pointer; user-select: none; }
+      label:hover { color: #fff; }
+      label i { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+      input[type=checkbox] { accent-color: #5b8dd6; margin: 0; }
+      .row { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+      button { flex: 1; min-width: 44px; background: #1e222a; color: #c8ccd2; border: 1px solid #2f343d; border-radius: 3px; padding: 5px 0; cursor: pointer; font: inherit; }
+      button:hover { background: #262b34; color: #fff; }
+      button.on { background: #2f4c78; border-color: #4a72ab; color: #fff; }
+      #dims { position: fixed; right: 14px; bottom: 12px; text-align: right; color: #6e747d; }
+      #dims b { color: #c8ccd2; font-weight: 500; }
+      canvas { display: block; }
+    </style>
+  </head>
+  <body>
+    <div id="panel">
+      <h1>iris-hub-case</h1>
+      <div class="sub">volumétrie · millimètres</div>
+
+      <h2>Vues</h2>
+      <div class="row">
+        <button data-view="iso">iso</button>
+        <button data-view="front">face</button>
+      </div>
+      <div class="row">
+        <button data-view="side">profil</button>
+        <button data-view="top">dessus</button>
+      </div>
+
+      <h2>Rendu</h2>
+      <div class="row">
+        <button id="mode-wire" class="on">filaire</button>
+        <button id="mode-solid">solide</button>
+      </div>
+
+      <h2>Éléments</h2>
+      <div id="groups"></div>
+
+      <h2>Repères</h2>
+      <div class="row">
+        <button id="toggle-grid" class="on">grille</button>
+        <button id="toggle-axes" class="on">axes</button>
+      </div>
+    </div>
+
+    <div id="dims"></div>
+
+    <script type="importmap">
+      { "imports": { "three": "https://unpkg.com/three@0.180.0/build/three.module.js",
+                     "three/addons/": "https://unpkg.com/three@0.180.0/examples/jsm/" } }
+    </script>
+    <script type="module">
+      import * as THREE from "three"
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js"
+      import { OBJLoader } from "three/addons/loaders/OBJLoader.js"
+
+      const GROUPS = {
+        base: { color: 0xb9bec6, label: "boîtier" },
+        cradle: { color: 0x7d838b, label: "berceau" },
+        "edp-slot": { color: 0xff5a3c, label: "sortie câble eDP" },
+        screen: { color: 0x9aa4b4, label: "capot ThinkPad" },
+        encoders: { color: 0xf0c74a, label: "4 encodeurs" },
+        pad: { color: 0x5b9be0, label: "pavé 8 directions" },
+        usb: { color: 0x4bd39a, label: "ports USB" },
+        split: { color: 0xe667e6, label: "plan de joint" },
+        internals: { color: 0xc79a5e, label: "organes internes" },
+        feet: { color: 0x8f9aa6, label: "pieds arrière" },
+      }
+
+      const scene = new THREE.Scene()
+      scene.background = new THREE.Color(0x101216)
+
+      const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 1, 6000)
+      const renderer = new THREE.WebGLRenderer({ antialias: true })
+      renderer.setSize(innerWidth, innerHeight)
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+      document.body.appendChild(renderer.domElement)
+
+      const controls = new OrbitControls(camera, renderer.domElement)
+      controls.enableDamping = true
+      controls.dampingFactor = 0.08
+
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x2a2e35, 2.0))
+      const key = new THREE.DirectionalLight(0xffffff, 2.2)
+      key.position.set(320, 520, 440)
+      scene.add(key)
+
+      const grid = new THREE.GridHelper(900, 18, 0x343941, 0x22262c)
+      scene.add(grid)
+
+      const axes = new THREE.Group()
+      for (const [dir, color] of [[[1, 0, 0], 0xd05a5a], [[0, 1, 0], 0x5ad07a], [[0, 0, 1], 0x5a8ad0]]) {
+        const geom = new THREE.BufferGeometry().setFromPoints([
+          new THREE.Vector3(0, 0, 0),
+          new THREE.Vector3(dir[0] * 120, dir[1] * 120, dir[2] * 120),
+        ])
+        axes.add(new THREE.Line(geom, new THREE.LineBasicMaterial({ color })))
+      }
+      scene.add(axes)
+
+      const parts = new Map()
+      let mode = "wire"
+
+      new OBJLoader().load("iris-hub-case.obj?v=" + Date.now(), (root) => {
+        const box = new THREE.Box3()
+
+        root.traverse((child) => {
+          if (!child.isMesh) return
+          const name = child.name.replace(/_.*$/, "")
+          const spec = GROUPS[name] ?? { color: 0x888888, label: name }
+
+          child.geometry.computeVertexNormals()
+          box.expandByObject(child)
+
+          const solid = new THREE.Mesh(
+            child.geometry,
+            new THREE.MeshStandardMaterial({
+              color: spec.color,
+              roughness: 0.7,
+              metalness: 0.05,
+              side: THREE.DoubleSide,
+              flatShading: true,
+              transparent: true,
+              opacity: name === "base" ? 0.28 : 0.9,
+            }),
+          )
+          const wire = new THREE.LineSegments(
+            new THREE.EdgesGeometry(child.geometry, 20),
+            new THREE.LineBasicMaterial({ color: spec.color }),
+          )
+
+          const holder = new THREE.Group()
+          holder.add(solid, wire)
+          scene.add(holder)
+          parts.set(name, { holder, solid, wire, spec })
+        })
+
+        applyMode()
+        buildLegend()
+
+        const size = box.getSize(new THREE.Vector3())
+        const centre = box.getCenter(new THREE.Vector3())
+        controls.target.copy(centre)
+        document.getElementById("dims").innerHTML =
+          `hors tout <b>${size.x.toFixed(0)} × ${size.z.toFixed(0)} × ${size.y.toFixed(0)}</b> mm` +
+          `<br>glisser : orbite · molette : zoom · clic droit : translation`
+        setView("iso")
+      })
+
+      function applyMode() {
+        for (const { solid, wire } of parts.values()) {
+          solid.visible = mode === "solid"
+          wire.visible = mode === "wire"
+        }
+      }
+
+      function buildLegend() {
+        const host = document.getElementById("groups")
+        host.innerHTML = ""
+        for (const [name, { spec }] of parts) {
+          const id = `g-${name}`
+          const label = document.createElement("label")
+          label.innerHTML =
+            `<input type="checkbox" id="${id}" checked>` +
+            `<i style="background:#${spec.color.toString(16).padStart(6, "0")}"></i>` +
+            `<span>${spec.label}</span>`
+          host.appendChild(label)
+          label.querySelector("input").addEventListener("change", (e) => {
+            parts.get(name).holder.visible = e.target.checked
+          })
+        }
+      }
+
+      const VIEWS = {
+        iso: [460, 380, 540],
+        front: [0, 120, 760],
+        side: [780, 120, 0],
+        top: [0, 820, 2],
+      }
+      function setView(name) {
+        camera.position.set(...VIEWS[name])
+        controls.update()
+        for (const b of document.querySelectorAll("[data-view]")) b.classList.toggle("on", b.dataset.view === name)
+      }
+      for (const b of document.querySelectorAll("[data-view]")) {
+        b.addEventListener("click", () => setView(b.dataset.view))
+      }
+
+      const wireBtn = document.getElementById("mode-wire")
+      const solidBtn = document.getElementById("mode-solid")
+      wireBtn.addEventListener("click", () => { mode = "wire"; wireBtn.classList.add("on"); solidBtn.classList.remove("on"); applyMode() })
+      solidBtn.addEventListener("click", () => { mode = "solid"; solidBtn.classList.add("on"); wireBtn.classList.remove("on"); applyMode() })
+
+      const gridBtn = document.getElementById("toggle-grid")
+      gridBtn.addEventListener("click", () => { grid.visible = !grid.visible; gridBtn.classList.toggle("on", grid.visible) })
+      const axesBtn = document.getElementById("toggle-axes")
+      axesBtn.addEventListener("click", () => { axes.visible = !axes.visible; axesBtn.classList.toggle("on", axes.visible) })
+
+      addEventListener("resize", () => {
+        camera.aspect = innerWidth / innerHeight
+        camera.updateProjectionMatrix()
+        renderer.setSize(innerWidth, innerHeight)
+      })
+
+      renderer.setAnimationLoop(() => {
+        controls.update()
+        renderer.render(scene, camera)
+      })
+    </script>
+  </body>
+</html>

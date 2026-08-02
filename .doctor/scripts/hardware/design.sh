@@ -70,6 +70,8 @@ for (const doc of assemblies) {
 
 const UNIT = /(mm|cm|µm|um|inch|\bin\b|\bmil\b|°|")/
 const DIM = /\d+(?:[.,]\d+)?\s*[×x]\s*\d+(?:[.,]\d+)?/
+// M3 x 8 est une designation ISO de visserie, pas une cote : l unite y est normative.
+const FASTENER = /\bM\d+(?:[.,]\d+)?\s*[×x]\s*\d+(?:[.,]\d+)?/
 const PLACEHOLDER = /^(\?+|tbd|todo|xx+|n\/a|-+|—+|\.\.\.|)$/i
 const MEASURE = /(à mesurer|a mesurer|non mesur|à confirmer|a confirmer|estim|provisoire)/i
 const PARAM = /(length|width|height|thickness|offset|depth|diam|angle|pitch|entraxe|longueur|largeur|hauteur|[ée]paisseur|profondeur|cote|dimension|encombrement|_mm)/i
@@ -80,7 +82,8 @@ for (const doc of docs) {
     const where = `${doc}:${i + 1}`
     if (/^\s*\|?[\s|:-]+\|?\s*$/.test(line)) return
 
-    if (DIM.test(line) && !UNIT.test(line))
+    const withoutFasteners = line.replace(new RegExp(FASTENER.source, "g"), "")
+    if (DIM.test(withoutFasteners) && !UNIT.test(withoutFasteners))
       fails.push(`491 ${where} — cote sans unité: ${line.trim().slice(0, 60)}`)
 
     if (line.trim().startsWith("|")) {

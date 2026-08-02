@@ -7,7 +7,10 @@ set -euo pipefail
 DOCTOR_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "${DOCTOR_ROOT:-$DOCTOR_DIR/..}"
 
+# Les regles d interface portent sur le front, pas sur les outils de hardware/.
+UI_SCOPE="${DOCTOR_UI_SCOPE:-^(apps|packages)/}"
 FILES=$("$DOCTOR_DIR/utils/list-files.sh" all \
+  | grep -E "$UI_SCOPE" \
   | grep -E '\.(ts|tsx|jsx|mjs)$' | grep -vE '\.(d|test|spec)\.tsx?$' || true)
 [[ -z "$FILES" ]] && { echo "OK: aucun fichier de rendu à inspecter"; exit 0; }
 

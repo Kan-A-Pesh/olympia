@@ -16,3 +16,13 @@ registry.db
 registry.db-*
 
 .DS_Store
+
+# Modèles CAO tiers : lourds, licences variables, retéléchargeables
+hardware/models/*
+!hardware/models/README.md
+
+# Sorties regenerables du previsualiseur : node generate.mjs && node wireframe.mjs
+hardware/iris-hub-case/preview/iris-hub-case.obj
+hardware/iris-hub-case/preview/preview.mtl
+hardware/iris-hub-case/preview/wireframe.svg
+hardware/iris-hub-case/preview/*.png
