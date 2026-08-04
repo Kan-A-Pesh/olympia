@@ -1,6 +1,12 @@
 const MAGIC = 0x48574631
 const HEADER_BYTES = 20
 const MAX_CHANNELS = 8
+const MAX_SAMPLES_PER_CHANNEL = 0xffff
+const MAX_BYTES_PER_SAMPLE = 2
+
+/** Plafond absolu d une trame, pour qu un en-tête falsifié ne fasse pas allouer sans borne. */
+export const MAX_FRAME_BYTES =
+  HEADER_BYTES + MAX_CHANNELS * 8 + MAX_CHANNELS * MAX_SAMPLES_PER_CHANNEL * MAX_BYTES_PER_SAMPLE
 
 export type WaveformChannel = {
   voltsPerSample: number
@@ -64,48 +70,75 @@ export function encodeWaveform(frame: WaveformFrame): Uint8Array {
   return new Uint8Array(buffer)
 }
 
-export function decodeWaveform(bytes: Uint8Array): WaveformFrame {
-  if (bytes.byteLength < HEADER_BYTES) throw new RangeError("waveform frame truncated")
-  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
+type FrameHeader = {
+  channelCount: number
+  bitsPerSample: 8 | 16
+  samplesPerChannel: number
+  sampleRateHz: number
+  capturedAt: number
+}
 
+function readHeader(view: DataView, byteLength: number): FrameHeader {
+  if (byteLength < HEADER_BYTES) throw new RangeError("waveform frame truncated")
+  if (byteLength > MAX_FRAME_BYTES) throw new RangeError(`waveform frame exceeds ${MAX_FRAME_BYTES} bytes`)
   if (view.getUint32(0, false) !== MAGIC) throw new TypeError("not a waveform frame")
 
-  const channelCount = view.getUint8(4)
   const bitsPerSample = view.getUint8(5)
   if (bitsPerSample !== 8 && bitsPerSample !== 16) {
     throw new TypeError(`unsupported sample width: ${bitsPerSample}`)
   }
-  const samplesPerChannel = view.getUint16(6, true)
-  const bytesPerSample = bitsPerSample / 8
 
-  const expected = HEADER_BYTES + channelCount * 8 + channelCount * samplesPerChannel * bytesPerSample
+  const channelCount = view.getUint8(4)
+  if (channelCount < 1 || channelCount > MAX_CHANNELS) {
+    throw new RangeError(`channel count out of range: ${channelCount}`)
+  }
+
+  return {
+    channelCount,
+    bitsPerSample,
+    samplesPerChannel: view.getUint16(6, true),
+    sampleRateHz: view.getUint32(8, true),
+    capturedAt: view.getFloat64(12, true),
+  }
+}
+
+export function decodeWaveform(bytes: Uint8Array): WaveformFrame {
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
+  const header = readHeader(view, bytes.byteLength)
+  const bytesPerSample = header.bitsPerSample / 8
+
+  const expected =
+    HEADER_BYTES + header.channelCount * 8 + header.channelCount * header.samplesPerChannel * bytesPerSample
   if (bytes.byteLength !== expected) {
     throw new RangeError(`waveform frame size mismatch: got ${bytes.byteLength}, expected ${expected}`)
   }
 
-  const scales: Array<{ voltsPerSample: number; offsetVolts: number }> = []
-  let offset = HEADER_BYTES
-  for (let c = 0; c < channelCount; c++) {
-    scales.push({ voltsPerSample: view.getFloat32(offset, true), offsetVolts: view.getFloat32(offset + 4, true) })
-    offset += 8
-  }
-
   const channels: WaveformChannel[] = []
-  for (let c = 0; c < channelCount; c++) {
-    const samples = bitsPerSample === 8 ? new Uint8Array(samplesPerChannel) : new Uint16Array(samplesPerChannel)
-    for (let i = 0; i < samplesPerChannel; i++) {
-      samples[i] = bitsPerSample === 8 ? view.getUint8(offset) : view.getUint16(offset, true)
+  let offset = HEADER_BYTES + header.channelCount * 8
+
+  for (let c = 0; c < header.channelCount; c++) {
+    const scaleAt = HEADER_BYTES + c * 8
+    const samples =
+      header.bitsPerSample === 8
+        ? new Uint8Array(header.samplesPerChannel)
+        : new Uint16Array(header.samplesPerChannel)
+
+    for (let i = 0; i < header.samplesPerChannel; i++) {
+      samples[i] = header.bitsPerSample === 8 ? view.getUint8(offset) : view.getUint16(offset, true)
       offset += bytesPerSample
     }
-    const scale = scales[c]
-    if (!scale) throw new RangeError("missing channel scale")
-    channels.push({ ...scale, samples })
+
+    channels.push({
+      voltsPerSample: view.getFloat32(scaleAt, true),
+      offsetVolts: view.getFloat32(scaleAt + 4, true),
+      samples,
+    })
   }
 
   return {
-    sampleRateHz: view.getUint32(8, true),
-    capturedAt: view.getFloat64(12, true),
-    bitsPerSample,
+    sampleRateHz: header.sampleRateHz,
+    capturedAt: header.capturedAt,
+    bitsPerSample: header.bitsPerSample,
     channels,
   }
 }

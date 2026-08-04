@@ -10,7 +10,7 @@ FILES=$("$DOCTOR_DIR/utils/list-files.sh" src)
 [[ -z "$FILES" ]] && { echo "OK: aucun fichier source à inspecter"; exit 0; }
 
 DOCTOR_FILES="$FILES" \
-DOCTOR_SIGROK_MODULE="${DOCTOR_SIGROK_MODULE:-sigrok}" \
+DOCTOR_SIGROK_MODULE="${DOCTOR_SIGROK_MODULE:-(apollo|sigrok)}" \
 node -e '
 const fs = require("node:fs")
 

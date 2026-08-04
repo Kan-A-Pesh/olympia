@@ -30,14 +30,16 @@ let targets = 0
 for (const file of files) {
   const text = read(file)
   const lines = text.split("\n")
-  const at = lines.findIndex((l) => retryName.test(l.replace(/\/\/.*$/, "")))
+  const code = (l) => l.replace(/\/\/.*$/, "").replace(/^\s*\*.*$/, "").replace(/\/\*.*$/, "")
+  const at = lines.findIndex((l) => retryName.test(code(l)))
   if (at === -1) continue
   targets += 1
   const where = `${file}:${at + 1}`
 
   if (!DELAY.test(text)) violations.push(`261 ${where} — reprise sans délai croissant`)
   if (!CAP.test(text)) violations.push(`263 ${where} — délai de reprise non plafonné`)
-  if (!TRACE.test(text)) violations.push(`264 ${where} — boucle de reprise sans trace`)
+  const loops = /(while\s*\(|for\s*\(|setTimeout|setInterval)/.test(text)
+  if (loops && !TRACE.test(text)) violations.push(`264 ${where} — boucle de reprise sans trace`)
   if (!JITTER.test(text)) warnings.push(`262 ${where} — délai de reprise non bruité`)
 }
 

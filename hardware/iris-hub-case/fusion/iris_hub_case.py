@@ -14,52 +14,52 @@ import traceback
 # L'API Fusion travaille en centimètres pour createByReal et en radians pour les
 # angles. Tout passe donc par createByString avec unité explicite, ou par mm().
 PARAMS = [
-    ("base_width", 340.0, "largeur hors tout du boîtier"),
-    ("base_depth", 150.0, "profondeur du boîtier hors pieds"),
-    ("base_height_rear", 70.0, "hauteur au dos"),
-    ("base_height_front", 38.0, "hauteur en façade"),
-    ("panel_start_depth", 54.0, "profondeur du plateau plat avant la pente"),
-    ("wall", 3.0, "épaisseur de paroi"),
-    ("split_x", 42.0, "position du plan de joint depuis le centre"),
+    ("base_width", 340.0, "largeur hors tout du boîtier", "mm"),
+    ("base_depth", 150.0, "profondeur du boîtier hors pieds", "mm"),
+    ("base_height_rear", 70.0, "hauteur au dos", "mm"),
+    ("base_height_front", 38.0, "hauteur en façade", "mm"),
+    ("panel_start_depth", 54.0, "profondeur du plateau plat avant la pente", "mm"),
+    ("wall", 3.0, "épaisseur de paroi", "mm"),
+    ("split_x", 42.0, "position du plan de joint depuis le centre", "mm"),
 
-    ("screen_width", 335.0, "largeur du capot ThinkPad"),
-    ("screen_height", 230.0, "hauteur du capot"),
-    ("screen_thickness", 7.0, "épaisseur du capot fermé"),
-    ("screen_tilt", 18.0, "inclinaison du capot en degrés"),
+    ("screen_width", 335.0, "largeur du capot ThinkPad", "mm"),
+    ("screen_height", 230.0, "hauteur du capot", "mm"),
+    ("screen_thickness", 7.0, "épaisseur du capot fermé", "mm"),
+    ("screen_tilt", 18.0, "inclinaison du capot", "deg"),
 
-    ("cradle_gap", 9.0, "largeur de la gorge du berceau"),
-    ("cradle_lip_height", 14.0, "hauteur des lèvres du berceau"),
-    ("cradle_offset_rear", 26.0, "position du berceau depuis le dos"),
+    ("cradle_gap", 9.0, "largeur de la gorge du berceau", "mm"),
+    ("cradle_lip_height", 14.0, "hauteur des lèvres du berceau", "mm"),
+    ("cradle_offset_rear", 26.0, "position du berceau depuis le dos", "mm"),
 
-    ("cable_slot_width", 22.0, "largeur du passage du câble eDP"),
-    ("cable_slot_x", 130.0, "position du passage depuis le centre"),
+    ("cable_slot_width", 22.0, "largeur du passage du câble eDP", "mm"),
+    ("cable_slot_x", 130.0, "position du passage depuis le centre", "mm"),
 
-    ("encoder_hole_dia", 7.2, "perçage de façade pour EC11, filetage M7x0.75"),
-    ("encoder_spacing", 46.0, "entraxe des encodeurs"),
-    ("encoder_group_x", -83.0, "centre du groupe d'encodeurs"),
-    ("encoder_offset", 30.0, "distance depuis le pli, le long de la façade"),
+    ("encoder_hole_dia", 7.2, "perçage de façade pour EC11, filetage M7x0.75", "mm"),
+    ("encoder_spacing", 46.0, "entraxe des encodeurs", "mm"),
+    ("encoder_group_x", -83.0, "centre du groupe d'encodeurs", "mm"),
+    ("encoder_offset", 30.0, "distance depuis le pli, le long de la façade", "mm"),
 
-    ("pad_hole_dia", 9.0, "perçage de façade pour un capuchon de tactile 6x6"),
-    ("pad_spacing", 16.0, "entraxe du pavé, atteignable au pouce sans bouger la main"),
-    ("pad_center_x", 105.0, "centre du pavé"),
+    ("pad_hole_dia", 9.0, "perçage de façade pour un capuchon de tactile 6x6", "mm"),
+    ("pad_spacing", 16.0, "entraxe du pavé, atteignable au pouce sans bouger la main", "mm"),
+    ("pad_center_x", 105.0, "centre du pavé", "mm"),
 
-    ("usb_cut_width", 15.0, "largeur de découpe d'un port USB"),
-    ("usb_cut_height", 8.0, "hauteur de découpe d'un port USB"),
-    ("usb_spacing", 20.0, "entraxe des ports USB"),
-    ("usb_center_x", -20.0, "centre du groupe USB"),
-    ("usb_height", 12.0, "hauteur des ports au-dessus du plancher"),
+    ("usb_cut_width", 15.0, "largeur de découpe d'un port USB", "mm"),
+    ("usb_cut_height", 8.0, "hauteur de découpe d'un port USB", "mm"),
+    ("usb_spacing", 20.0, "entraxe des ports USB", "mm"),
+    ("usb_center_x", -20.0, "centre du groupe USB", "mm"),
+    ("usb_height", 12.0, "hauteur des ports au-dessus du plancher", "mm"),
 
-    ("foot_width", 46.0, "largeur d'un pied"),
-    ("foot_depth", 58.0, "débord d'un pied vers l'arrière"),
-    ("foot_height", 10.0, "hauteur d'un pied"),
-    ("foot_offset_x", 122.0, "position d'un pied depuis le centre"),
+    ("foot_width", 46.0, "largeur d'un pied", "mm"),
+    ("foot_depth", 58.0, "débord d'un pied vers l'arrière", "mm"),
+    ("foot_height", 10.0, "hauteur d'un pied", "mm"),
+    ("foot_offset_x", 122.0, "position d'un pied depuis le centre", "mm"),
 
     # Ruthex RX-M3x5.7 : trou 4,0 mm et paroi mini 1,6 mm sont les cotes du
     # fabricant ; la profondeur suit la règle SPIROL longueur + 2 pas de filet.
-    ("insert_hole_dia", 4.0, "perçage recevant l'insert laiton M3"),
-    ("insert_depth", 6.7, "profondeur du perçage d'insert"),
-    ("boss_dia", 8.6, "diamètre extérieur d'un bossage d'insert"),
-    ("boss_height", 9.0, "hauteur d'un bossage"),
+    ("insert_hole_dia", 4.0, "perçage recevant l'insert laiton M3", "mm"),
+    ("insert_depth", 6.7, "profondeur du perçage d'insert", "mm"),
+    ("boss_dia", 8.6, "diamètre extérieur d'un bossage d'insert", "mm"),
+    ("boss_height", 9.0, "hauteur d'un bossage", "mm"),
 ]
 
 
@@ -79,19 +79,19 @@ def point(x, y, z):
 def create_parameters(design):
     """Publie PARAMS dans la table des paramètres, sans écraser l'existant."""
     existing = {p.name for p in design.userParameters}
-    for name, value, comment in PARAMS:
+    for name, value, comment, unit in PARAMS:
         if name in existing:
             continue
         design.userParameters.add(
             name,
-            adsk.core.ValueInput.createByString("{} mm".format(value)),
-            "mm",
+            adsk.core.ValueInput.createByString("{} {}".format(value, unit)),
+            unit,
             comment,
         )
 
 
 def values():
-    return {name: value for name, value, _ in PARAMS}
+    return {name: value for name, value, _, _ in PARAMS}
 
 
 def build_shell(comp, p):
@@ -114,7 +114,7 @@ def build_shell(comp, p):
     previous = None
     first = None
     for z, y in profile_points:
-        current = adsk.core.Point3D.create(cm(y), cm(z), 0)
+        current = adsk.core.Point3D.create(cm(-z), cm(y), 0)
         if previous is not None:
             lines.addByTwoPoints(previous, current)
         else:

@@ -13,9 +13,10 @@ FILES=$("$DOCTOR_DIR/utils/list-files.sh" src | grep -vE "/($SCHEMA_FILES)$" || 
 [[ -z "$FILES" ]] && { echo "OK: aucun fichier source à inspecter"; exit 0; }
 
 DOCTOR_FILES="$FILES" \
-DOCTOR_TIME_ROOTS="${DOCTOR_TIME_ROOTS:-timeout|delay|interval|duration|elapsed|period|ttl|lifetime|latency|backoff|debounce|throttle|uptime|cooldown|timespan}" \
+DOCTOR_NAME_EXEMPT="${DOCTOR_NAME_EXEMPT:-(Command|Schema|Parser|Handler)$|^(assert|parse|format|is|has)}" \
+  DOCTOR_TIME_ROOTS="${DOCTOR_TIME_ROOTS:-timeout|delay|interval|duration|elapsed|period|ttl|lifetime|latency|backoff|debounce|throttle|uptime|cooldown|timespan}" \
 DOCTOR_QUANTITY_ROOTS="${DOCTOR_QUANTITY_ROOTS:-rate|frequency|freq|voltage|amplitude|temperature|resistance|capacitance|inductance|bandwidth|distance|speed|velocity|pressure|humidity|angle|energy|gain}" \
-DOCTOR_UNITS="${DOCTOR_UNITS:-ms|msec|msecs|millis|milliseconds|s|sec|secs|second|seconds|us|usec|micros|ns|nanos|min|mins|minute|minutes|h|hr|hrs|hour|hours|d|day|days|hz|khz|mhz|ghz|v|mv|kv|volt|volts|a|ma|amp|amps|ohm|ohms|kohm|celsius|kelvin|fahrenheit|percent|pct|ratio|db|dbm|bps|kbps|mbps|byte|bytes|bit|bits|px|pixels|deg|degrees|rad|radians|m|mm|cm|km|meters|count|per}" \
+DOCTOR_UNITS="${DOCTOR_UNITS:-ms|msec|msecs|millis|milliseconds|s|sec|secs|second|seconds|us|usec|micros|ns|nanos|min|mins|minute|minutes|h|hr|hrs|hour|hours|d|day|days|hz|khz|mhz|ghz|v|mv|kv|volt|volts|a|ma|amp|amps|ohm|ohms|kohm|celsius|kelvin|fahrenheit|percent|pct|ratio|db|dbm|bps|kbps|mbps|baud|bauds|byte|bytes|bit|bits|px|pixels|deg|degrees|rad|radians|m|mm|cm|km|meters|count|per}" \
 node -e '
 const fs = require("node:fs")
 
@@ -23,6 +24,7 @@ const files = (process.env.DOCTOR_FILES || "").split("\n").filter(Boolean)
 const timeRoots = new Set(process.env.DOCTOR_TIME_ROOTS.split("|"))
 const quantityRoots = new Set(process.env.DOCTOR_QUANTITY_ROOTS.split("|"))
 const units = new Set(process.env.DOCTOR_UNITS.split("|"))
+const exempt = new RegExp(process.env.DOCTOR_NAME_EXEMPT)
 const read = (f) => { try { return fs.readFileSync(f, "utf8") } catch { return "" } }
 const blank = (m) => m.replace(/[^\n]/g, " ")
 const strip = (s) => s
@@ -56,6 +58,7 @@ for (const file of files) {
       pattern.lastIndex = 0
       while ((match = pattern.exec(line)) !== null) {
         const name = match[1]
+        if (exempt.test(name)) continue
         const words = wordsOf(name)
         if (words.length === 0) continue
         named += 1

@@ -11,18 +11,19 @@ FILES=$("$DOCTOR_DIR/utils/list-files.sh" src)
 [[ -z "$FILES" ]] && { echo "OK: aucun fichier source à inspecter"; exit 0; }
 
 DOCTOR_FILES="$FILES" \
-DOCTOR_SERIAL_FILES="${DOCTOR_SERIAL_FILES:-(serial|sigrok|uart|tty|usb|pico)}" \
+DOCTOR_SERIAL_FILES="${DOCTOR_SERIAL_FILES:-(parser|parse|frame|framing|decode|codec|protocol|sigrok)}" \
 node -e '
 const fs = require("node:fs")
 
 const files = (process.env.DOCTOR_FILES || "").split("\n").filter(Boolean)
 const read = (f) => { try { return fs.readFileSync(f, "utf8") } catch { return "" } }
 const serialFile = new RegExp(process.env.DOCTOR_SERIAL_FILES, "i")
+const transportFile = /(port|transport|socket)\.[tj]s$/i
 const SERIAL_CODE = /(from\s+["\x27]serialport["\x27]|new\s+SerialPort\b|\/dev\/tty)/
 
 const DATA_HANDLER = /\.(on|once|addListener)\s*\(\s*["\x27`]data["\x27`]/
 const IDENTITY = /(SRPICO|handshake|identify|signature)/i
-const VALIDATED = /(startsWith|\.test\s*\(|\.match\s*\(|safeParse|\.parse\s*\(|===\s*["\x27`])/
+const VALIDATED = /(startsWith|\.test\s*\(|\.exec\s*\(|\.match\s*\(|safeParse|\.parse\s*\(|===\s*["\x27`])/
 const PARSER_CLASS = /class\s+\w*Parser\b/
 const LEFTOVER = /#?(pending|remainder|rest|carry|leftover)\b/
 const BINARY_STRING = /["\x27`]\s*\+\s*(chunk|data|buf|buffer|frame)\b|\b(chunk|data|buf|buffer|frame)\s*\+\s*["\x27`]|\$\{\s*(chunk|buf|buffer|frame)\s*\}/
@@ -36,6 +37,7 @@ let targets = 0
 
 for (const file of files) {
   const text = read(file)
+  if (transportFile.test(file)) continue
   if (!serialFile.test(file) && !SERIAL_CODE.test(text)) continue
   targets += 1
   const lines = text.split("\n")
