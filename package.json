@@ -16,7 +16,7 @@
     "doctor:selftest": "bash .doctor/selftest.sh"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
+    "@types/node": "^26.6.3",
     "turbo": "^2.3.0",
     "typescript": "^5.7.0",
     "vitest": "^2.1.0"
